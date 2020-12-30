@@ -9,7 +9,7 @@
 </head>
  
 <body> 
-<%@include  file="index.html" %>
+<%@include  file="index.jsp" %>
 
 <h1 align="center" class="display-4">Inscription</h1>
 

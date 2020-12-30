@@ -116,8 +116,14 @@ public class MysqlBDD {
 			while(res.next()) {
 				   if(i==0) {
 					   user = new UserBean();
-					   user.setLogin(res.getString("utilisateur"));
+					   user.setGenre(Integer.valueOf(res.getString("genre")));
+					   user.setVille(res.getString("ville"));
+					   user.setPays(res.getString("pays"));
+					   user.setDate(res.getString("date"));
+					   user.setAdresse(res.getString("adresse"));
+					   user.setMail(res.getString("mail"));
 					   user.setMdp(res.getString("password"));
+					   user.setLogin(res.getString("utilisateur"));
 					   user.setNom(res.getString("nom"));
 					   user.setPrenom(res.getString("prenom"));
 				   }

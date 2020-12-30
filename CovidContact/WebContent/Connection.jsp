@@ -12,20 +12,20 @@
     </head>
     
     <body>
-    	<%@include  file="index.html" %>
+    	<%@include  file="index.jsp" %>
         <h2 align="center" class="display-4">Connection</h2>
     	
         <form method="post" action="Login" >
 	        <div class="col-md-4 mb-3">
 		      <label for="txtLogin">Login/Email</label>
-		      <input type="text" class="form-control " id="idLogin" name="utilisateur" placeholder="Utilisateur/Mail" value='${utilisateur}' required>
+		      <input type="text" class="form-control " id="idLogin" name="utilisateur" placeholder="Utilisateur/Mail" required>
 		      <div class="valid-feedback">
 		        Looks good!
 		      </div>
 		    </div>
 		    <div class="col-md-4 mb-3">
 		      <label for="txtpassword">Password</label>
-		      <input type="password" class="form-control i" id="idPassword" name="password" placeholder="Password" value='${password}' required>
+		      <input type="password" class="form-control i" id="idPassword" name="password" placeholder="Password"  required>
 		      <div class="valid-feedback">
 		        Looks good!
 		      </div>

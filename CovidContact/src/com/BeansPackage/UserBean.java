@@ -16,8 +16,9 @@ public class UserBean {
 	private String login;
 	private String ville;
 	private String pays;
-	private Date date;
+	private String date;
 	private String adresse;
+	private String mail;
 	private String rang;
 	
 	public void setId(int n) {this.id = n;}
@@ -38,7 +39,9 @@ public class UserBean {
 	
 	public void setAdresse(String adresse) {this.adresse = adresse;}
 	
-	public void setDate(Date date) {this.date = date;}
+	public void setDate(String date) {this.date = date;}
+	
+	public void setMail(String mail) {this.mail = mail;}
 	
 	public void setRang(String rang) {this.rang = rang;}
 	
@@ -58,9 +61,11 @@ public class UserBean {
 	
 	public String getPays() {return this.pays;}
 	
-	public String getADresse() {return this.adresse;}
+	public String getAdresse() {return this.adresse;}
 	
-	public Date getDate() {return this.date;}
+	public String getDate() {return this.date;}
+	
+	public String getMail() {return this.mail;}
 	
 	public String getRang() {return this.rang;}
 	

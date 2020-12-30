@@ -7,7 +7,7 @@
 <title>Accueille</title>
 </head>
 <body>
-<%@include  file="index.html" %>
+<%@include  file="index.jsp" %>
 
 <h2 align="center" class="display-4">Accueille</h2>
 
