@@ -60,7 +60,7 @@
                     <div class="col-md-6">
                         <div class="profile-head">
                                     <h5>
-                                        ${current_user.getNom()} ${current_user.getPrenom()}
+                                        <% if(v.getGenre()==1){out.print("Mme. ");}else{out.print("M. ");} %>${current_user.getNom()} ${current_user.getPrenom()}
                                     </h5>
                                     <h6>
                                         Date aniverssaire : ${current_user.getDate()}
@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-md-2">
                         <a href="ProfilEditeur.jsp">Modifer Profil</a>
-                        <a href="ProfilEditeur.jsp">Modifer Mot De Passe</a>
+                        <a href="PasswordEditeur.jsp">Modifer Mot De Passe</a>
                     </div>
                 </div>
                 <div class="row">

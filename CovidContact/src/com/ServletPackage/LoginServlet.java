@@ -46,8 +46,6 @@ public class LoginServlet extends HttpServlet {
         user = BDD.getUer(request);
         
         HttpSession session = request.getSession( true );
-        session.setAttribute( "utilisateur", login );
-        session.setAttribute( "password", password );
         if ( user != null) {
         	session.setAttribute("current_user",user);
 			request.setAttribute("current_user",user);

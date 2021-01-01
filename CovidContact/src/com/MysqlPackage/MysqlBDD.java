@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -166,5 +167,172 @@ public class MysqlBDD {
 		return user;
 		
 	}
+	
+public ArrayList<UserBean> getUer(String login, String u) {
+		
+		Connection connexion = connect();
+		Statement statement = null;
+		ResultSet res = null;
+		UserBean user = null;
+		ArrayList<UserBean> users = new ArrayList<>();
+		
+		try {
+	    	statement = connexion.createStatement();
+	    	String rq = "SELECT * from Utilisateur where (Mail='"+login+"' or Nom='"+login+"' or Utilisateur ='"+login+"' or  Prenom='"+login+"') and Utilisateur !='"+u+"' ;";
+	    	res = statement.executeQuery(rq);
+	    	
+		} 
+	    catch (SQLException e) {
+			e.printStackTrace();
+	    }
+		
+		   try {
+			while(res.next()) {
+				   
+			   user = new UserBean();
+			   user.setGenre(Integer.valueOf(res.getString("genre")));
+			   user.setVille(res.getString("ville"));
+			   user.setPays(res.getString("pays"));
+			   user.setDate(res.getString("date"));
+			   user.setAdresse(res.getString("adresse"));
+			   user.setMail(res.getString("mail"));
+			   user.setMdp(res.getString("password"));
+			   user.setLogin(res.getString("utilisateur"));
+			   user.setNom(res.getString("nom"));
+			   user.setPrenom(res.getString("prenom"));
+				   
+			   users.add(user);
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+		    if ( res != null ) {
+		        try {
+		            /* On commence par fermer le ResultSet */
+		        	System.out.println("fermeture resultat");
+		            res.close();
+		        } catch ( SQLException ignore ) {
+		        }
+		    }
+		    if ( statement != null ) {
+		        try {
+		            /* Puis on ferme le Statement */
+		        	System.out.println("fermeture statament");
+		            statement.close();
+		        } catch ( SQLException ignore ) {
+		        }
+		    }
+		    if ( connexion != null ) {
+		        try {
+		            /* Et enfin on ferme la connexion */
+		        	System.out.println("fermeture connexion");
+		            connexion.close();
+		        } catch ( SQLException ignore ) {
+		        }
+		    }
+		}
+		
+		return users;
+		
+	}
+
+public ArrayList<UserBean> getListAmi(String login) {
+	
+	Connection connexion = connect();
+	Statement statement = null;
+	ResultSet res = null;
+	ResultSet res2 = null;
+	UserBean user = null;
+	String[] parts = null;
+	ArrayList<UserBean> users = new ArrayList<>();
+	
+	try {
+    	statement = connexion.createStatement();
+    	String rq = "SELECT * from Utilisateur where Utilisateur ='"+login+"';";
+    	res = statement.executeQuery(rq);
+    	
+	} 
+    catch (SQLException e) {
+		e.printStackTrace();
+    }
+	
+	   try {
+		while(res.next()) {
+			if(res.getString("ListAmies") != null) {
+				parts = res.getString("ListAmies").split(",");
+				
+			}
+		 }
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		for(int j = 0; j < parts.length; j++) {
+			try {
+			String rq = "SELECT * from Utilisateur where Id ='"+Integer.valueOf(parts[j])+"';";
+	    	res2 = statement.executeQuery(rq);
+			} 
+		    catch (SQLException e) {
+				e.printStackTrace();
+		    }
+			while(res2.next()) {
+				user = new UserBean();
+			   user.setGenre(Integer.valueOf(res2.getString("genre")));
+			   user.setVille(res2.getString("ville"));
+			   user.setPays(res2.getString("pays"));
+			   user.setDate(res2.getString("date"));
+			   user.setAdresse(res2.getString("adresse"));
+			   user.setMail(res2.getString("mail"));
+			   user.setMdp(res2.getString("password"));
+			   user.setLogin(res2.getString("utilisateur"));
+			   user.setNom(res2.getString("nom"));
+			   user.setPrenom(res2.getString("prenom"));
+			   users.add(user);
+			}
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally {
+	    if ( res != null ) {
+	        try {
+	            /* On commence par fermer le ResultSet */
+	        	System.out.println("fermeture resultat");
+	            res.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	    if ( res2 != null ) {
+	        try {
+	            /* On commence par fermer le ResultSet */
+	        	System.out.println("fermeture resultat");
+	            res2.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	    if ( statement != null ) {
+	        try {
+	            /* Puis on ferme le Statement */
+	        	System.out.println("fermeture statament");
+	            statement.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	    if ( connexion != null ) {
+	        try {
+	            /* Et enfin on ferme la connexion */
+	        	System.out.println("fermeture connexion");
+	            connexion.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	}
+	
+	return users;
+	
+}
 
 }

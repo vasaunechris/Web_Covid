@@ -21,6 +21,7 @@ CREATE TABLE Utilisateur (
 	Adresse				varchar(50)	NOT NULL,
 	Pays				varchar(50)	NOT NULL,
 	Ville				varchar(50)	NOT NULL,
+	ListAmies			varchar(30) NULL,
  	UNIQUE ( Mail ),
  	UNIQUE ( Utilisateur )
 ) ENGINE = InnoDB;
@@ -28,6 +29,15 @@ CREATE TABLE Utilisateur (
 INSERT INTO Utilisateur (Genre,Nom, Prenom, Utilisateur, Password, Mail, Date, Adresse, Pays, Ville) VALUES ( 1,'Anderson',	'Neo','aze','aze','aze@aze.fr',NOW(),'aazeaze','azeazeaze','azeazeaze' );
 SELECT * from Utilisateur where (Mail='azee@aze.fr' and Password='aze') or (Utilisateur ='aze' and  Password='aze') ;
 SELECT * FROM Utilisateur;
+
+-- -----------------------------------------------------------------------------
+-- - Construction de la tables des articles en vente                         ---
+-- -----------------------------------------------------------------------------
+CREATE TABLE List_Amie (
+	Id					int(4)		PRIMARY KEY AUTO_INCREMENT,
+	IdUser				int(4)		NOT NULL REFERENCES Utilisateur(Id),
+	Brand				varchar(30)	NOT NULL,
+) ENGINE = InnoDB;
 
 -- -----------------------------------------------------------------------------
 -- - Construction de la table des administrateurs                            ---
