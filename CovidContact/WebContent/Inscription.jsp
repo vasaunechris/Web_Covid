@@ -16,7 +16,6 @@
 <form method="post" action="Register" >
 
   <div class="form-row">
-  
     <div class="col-auto my-1">
       <label  for="idGenre">Genre</label>
       <select class="form-select custom-select mr-sm-2 " id="idGenre" name="genre" required>
@@ -34,6 +33,7 @@
         ${valide.getErreurs().get('nom')}
       </div>
     </div>
+    
     <div class="col-md-4 mb-3">
       <label for="idPrenom">Prenom</label>
       <input type="text" class="form-control " value="${prenom}" id="idprenom" name="prenom" placeholder="Prenom" required>

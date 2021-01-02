@@ -6,9 +6,16 @@
   		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
+	
 	<%@ page import="java.util.ArrayList"%>
 	<%@ page import="com.BeansPackage.UserBean"%>
+	<%@ page import="com.BeansPackage.LieuBean"%>
+	<%@ page import="com.BeansPackage.ActiviteBean"%>
 	<% UserBean v = (UserBean) session.getAttribute("current_user");%>
+	<% ArrayList<UserBean> rech = (ArrayList<UserBean>) request.getAttribute("recherche");%>
+	<% ArrayList<UserBean> ams = (ArrayList<UserBean>) session.getAttribute("amis");%>
+	<% ArrayList<LieuBean> lieux = (ArrayList<LieuBean>) session.getAttribute("lieux");%>
+	<% ArrayList<ActiviteBean> activites = (ArrayList<ActiviteBean>) session.getAttribute("activites");%>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		  <a class="navbar-brand" href="Home.jsp">CovidContact</a>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,9 +35,13 @@
 		  		out.print("<li class='nav-item'>");
 		  		out.print("<a class='nav-link' href='Profil.jsp'>Profil</a>");
 		  		out.print("</li>");
-		  		
+		  	
 		  		out.print("<li class='nav-item'>");
 		  		out.print("<a class='nav-link' href='Relation.jsp'>Relation</a>");
+		  		out.print("</li>");
+		  		
+		  		out.print("<li class='nav-item'>");
+		  		out.print("<a class='nav-link' href='Activite.jsp'>Activité</a>");
 		  		out.print("</li>");
 		      }else{
 	    	  	out.print("<li class='nav-item'>");

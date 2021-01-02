@@ -1,6 +1,5 @@
 	package com.BeansPackage;
 
-import java.sql.Date;
 
 public class UserBean {
 	

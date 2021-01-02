@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.BeansPackage.ActiviteBean;
+import com.BeansPackage.LieuBean;
 import com.BeansPackage.UserBean;
 
 public class MysqlBDD {
@@ -91,6 +93,43 @@ public class MysqlBDD {
 	    }
 	}
 	
+	public void createActivite(HttpServletRequest request, int id) {
+		Connection connexion = connect();
+		Statement statement = null;
+		
+		String lieu = request.getParameter("lieu");
+		int nlieu = Integer.valueOf(lieu);
+		String nom = request.getParameter( "nom" );
+        String heureD = request.getParameter( "heureD" );
+        String heureF = request.getParameter( "heureF" );
+        String date = request.getParameter( "date" );
+		   
+	    try {
+	    	statement = connexion.createStatement();
+	    	String rq = "INSERT INTO Activite (IdUser, Nom, Date, HeureDebut, HeureFin, IdLieux) VALUES ("+id+",'"+nom+"','"+date+"','"+heureD+"','"+heureF+"','"+nlieu+"');";
+	    	statement.executeUpdate(rq);
+		} 
+	    catch (SQLException e) {
+			e.printStackTrace();
+	    } finally {
+	        if ( statement != null ) {
+	            try {
+	            	System.out.println("fermeture statement");
+	            	statement.close();
+	                
+	            } catch ( SQLException ignore ) {
+	            }
+	        }
+	        if ( connexion != null ) {
+	            try {
+	            	System.out.println("fermeture connection");
+	            	connexion.close();
+	            } catch ( SQLException ignore ) {
+	            }
+	        }
+	    }
+	}
+	
 	public UserBean getUer(HttpServletRequest request) {
 		
 		Connection connexion = connect();
@@ -118,6 +157,7 @@ public class MysqlBDD {
 				   if(i==0) {
 					   user = new UserBean();
 					   user.setGenre(Integer.valueOf(res.getString("genre")));
+					   user.setId(Integer.valueOf(res.getString("id")));
 					   user.setVille(res.getString("ville"));
 					   user.setPays(res.getString("pays"));
 					   user.setDate(res.getString("date"));
@@ -268,7 +308,9 @@ public ArrayList<UserBean> getListAmi(String login) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+	
 	try {
+		if(parts != null) {
 		for(int j = 0; j < parts.length; j++) {
 			try {
 			String rq = "SELECT * from Utilisateur where Id ='"+Integer.valueOf(parts[j])+"';";
@@ -291,6 +333,7 @@ public ArrayList<UserBean> getListAmi(String login) {
 			   user.setPrenom(res2.getString("prenom"));
 			   users.add(user);
 			}
+		}
 		}
 		
 	} catch (SQLException e) {
@@ -334,5 +377,137 @@ public ArrayList<UserBean> getListAmi(String login) {
 	return users;
 	
 }
+
+public ArrayList<LieuBean> getListLieux() {
+	
+	Connection connexion = connect();
+	Statement statement = null;
+	ResultSet res = null;
+	LieuBean lieu = null;
+	ArrayList<LieuBean> lieux = new ArrayList<>();
+	
+	try {
+    	statement = connexion.createStatement();
+    	String rq = "SELECT * from Lieux ;";
+    	res = statement.executeQuery(rq);
+    	
+	} 
+    catch (SQLException e) {
+		e.printStackTrace();
+    }
+	
+	   try {
+		while(res.next()) {
+			   
+		   lieu = new LieuBean();
+		   lieu.setId(Integer.valueOf(res.getString("Id")));
+		   lieu.setAdresse(res.getString("Adresse"));
+		   lieu.setDenomination(res.getString("Denomination"));
+		   lieux.add(lieu);
+		   
+		 }
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally {
+	    if ( res != null ) {
+	        try {
+	            /* On commence par fermer le ResultSet */
+	        	System.out.println("fermeture resultat");
+	            res.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	    if ( statement != null ) {
+	        try {
+	            /* Puis on ferme le Statement */
+	        	System.out.println("fermeture statament");
+	            statement.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	    if ( connexion != null ) {
+	        try {
+	            /* Et enfin on ferme la connexion */
+	        	System.out.println("fermeture connexion");
+	            connexion.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	}
+	
+	return lieux;
+	
+}
+
+public ArrayList<ActiviteBean> getAcitivite(int id) {
+	
+	Connection connexion = connect();
+	Statement statement = null;
+	ResultSet res = null;
+	ActiviteBean activite = null;
+	LieuBean lieu = null;
+	ArrayList<ActiviteBean> activites = new ArrayList<>();
+	
+	try {
+    	statement = connexion.createStatement();
+    	String rq = "select * from Activite inner join lieux on  activite.IdLieux = lieux.Id where activite.IdUser = "+id+";";
+    	res = statement.executeQuery(rq);
+    	
+	} 
+    catch (SQLException e) {
+		e.printStackTrace();
+    }
+	
+	   try {
+		while(res.next()) {
+			   
+		   activite = new ActiviteBean();
+		   lieu = new LieuBean();
+		   activite.setId(Integer.valueOf(res.getString("activite.Id")));
+		   activite.setNom(res.getString("Nom"));
+		   activite.setDate(res.getString("Date"));
+		   activite.setHeureD(res.getString("HeureDebut"));
+		   activite.setHeureF(res.getString("HeureFin"));
+		   lieu.setDenomination(res.getString("Denomination"));
+		   lieu.setId(Integer.valueOf(res.getString("IdLieux")));
+		   lieu.setAdresse(res.getString("Adresse"));
+		   activite.setLieu(lieu);
+		   activites.add(activite);
+		 }
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally {
+	    if ( res != null ) {
+	        try {
+	            /* On commence par fermer le ResultSet */
+	        	System.out.println("fermeture resultat");
+	            res.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	    if ( statement != null ) {
+	        try {
+	            /* Puis on ferme le Statement */
+	        	System.out.println("fermeture statament");
+	            statement.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	    if ( connexion != null ) {
+	        try {
+	            /* Et enfin on ferme la connexion */
+	        	System.out.println("fermeture connexion");
+	            connexion.close();
+	        } catch ( SQLException ignore ) {
+	        }
+	    }
+	}
+	
+	return activites;
+	
+}
+	
 
 }

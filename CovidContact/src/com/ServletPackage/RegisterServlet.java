@@ -43,6 +43,7 @@ public class RegisterServlet extends HttpServlet {
         valide.Verification(request);
         
         HttpSession session = request.getSession();
+        
         if(valide.getErreurs().isEmpty()) {
         	MysqlBDD BDD = new MysqlBDD();
             BDD.createUser(request);;

@@ -9,8 +9,7 @@
 </head>
 <body>
 <%@include  file="index.jsp" %>
-<% ArrayList<UserBean> rech = (ArrayList<UserBean>) request.getAttribute("recherche");%>
-<% ArrayList<UserBean> ams = (ArrayList<UserBean>) request.getAttribute("amis");%>
+
 
 <form class="form-inline" method="post" action="Relation">
   <div class="form-group mb-2">
@@ -71,7 +70,7 @@
 		out.print("<p class='text-muted'>Utilisateur <span>| </span><span>"+ams.get(i).getLogin()+"</span></p>");
 		out.print("</div>");
 		out.print("<form class='form-inline' method='post' action='Relation'>");
-		out.print("<button type='submit' class='btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light'>ajouter</button>");
+		out.print("<button type='submit' class='btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light'>supprimer</button>");
 		out.print("</form>");
 		out.print("<div class='mt-4'>");
 		out.print("<div class='row'>");

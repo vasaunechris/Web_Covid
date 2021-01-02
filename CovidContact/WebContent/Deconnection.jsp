@@ -10,7 +10,9 @@
 
 <% 
 session.setAttribute("current_user",null);
-request.setAttribute("current_user",null);
+session.setAttribute("activites",null);
+session.setAttribute("lieux",null);
+
 request.getRequestDispatcher( "/Home.jsp" ).forward( request, response );
 %>
 
